@@ -8,6 +8,16 @@ def get_fitness_functions_dict():
         },
     }
 
+def get_migration_model_dict():
+    return {
+        'convection_const': {
+            'migration': "convection_const",
+        },
+        'convection_front': {
+            'migration': "convection_front",
+        },
+    }
+
 
 def get_argument_parser():
     parser = argparse.ArgumentParser()
@@ -27,6 +37,29 @@ def get_argument_parser():
         type=int,
     )
 
+    parser.add_argument(
+        "-r", "--ratio",
+        required=True,
+        help="migration ratio",
+        default=0.1,
+        type=float,
+    )
+
+    parser.add_argument(
+        "-max", "--max_iter",
+        required=True,
+        help="max iterations without improvement",
+        default=1000,
+        type=int,
+    )
+
+    parser.add_argument(
+        "-m", "--model",
+        required=True,
+        help="migration model",
+        choices=get_migration_model_dict().keys(),
+    )
+
     return parser
 
 
@@ -34,20 +67,4 @@ if __name__ == "__main__":
 
     args = get_argument_parser().parse_args()
 
-    parser.add_argument("-f", "--file", dest="filename",
-                        help="write report to FILE", metavar="FILE")
-
-    parser.add_argument("-q", "--quiet",
-                        action="store_false", dest="verbose", default=True,
-                        help="don't print status messages to stdout")
-
-    args = parser.parse_args()
-
-    if(len(sys.argv) != 6):
-        print("Wrong number of arguments!")
-        print("Usage:", sys.argv[0],
-              "EXPERIMENT_NAME NUM_OF_ISLANDS MIGRATIONS_RATIO max_iterations_wo_improvement MODEL")
-        sys.exit()
-
-
-    print(sys.argv)
+    print(args)
