@@ -66,5 +66,3 @@ def get_argument_parser():
 if __name__ == "__main__":
 
     args = get_argument_parser().parse_args()
-
-    print(args)
